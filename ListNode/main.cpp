@@ -15,10 +15,10 @@ int main()
     cout << "traverse is : " <<endl;
     ln->traverse(ln->head);
 
-    cout << "sort is : " << b << endl;
+    cout << "sort is : " << endl;
     ln->sort(ln->head);
 
-    cout << "sort traverse is : " << b << endl;
+    cout << "sort traverse is : " << endl;
     ln->traverse(ln->head);
 
 
