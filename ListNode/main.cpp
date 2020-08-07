@@ -6,38 +6,51 @@ using namespace std;
 int main()
 {
     ListNode *ln = new ListNode(4);
-    int len = ln->length(ln->head);
+    int len = ln->length();
     cout << "len is : " << len << endl;
 
-    bool b = ln->isEmpty(ln->head);
+    bool b = ln->isEmpty();
     cout << "b is : " << b << endl;
 
     cout << "traverse is : " <<endl;
-    ln->traverse(ln->head);
+    ln->traverse();
 
     cout << "sort is : " << endl;
-    ln->sort(ln->head);
+    ln->sort();
 
     cout << "sort traverse is : " << endl;
-    ln->traverse(ln->head);
+    ln->traverse();
 
 
-    ln->insert(ln->head, 3, 30);
+    ln->insert(3, 30);
     cout << "insert1 traverse is : " <<endl;
-    ln->traverse(ln->head);
-    ln->insert(ln->head, 2, 20);
+    ln->traverse();
+    ln->insert(2, 20);
     cout << "insert2 traverse is : " <<endl;
-    ln->traverse(ln->head);
-    ln->insert(ln->head, 4, 40);
-    ln->insert(ln->head, 6, 60);
+    ln->traverse();
+    ln->insert(4, 40);
+    ln->insert(6, 60);
     cout << "insert3 traverse is : " <<endl;
-    ln->traverse(ln->head);
+    ln->traverse();
 
-    ln->deleteNode(ln->head, 2);
+    ln->deleteNode(2);
     cout << "deleteNode1 traverse is : " <<endl;
-    ln->traverse(ln->head);
-    ln->deleteNode(ln->head, 2);
+    ln->traverse();
+    ln->deleteNode(2);
     cout << "deleteNode2 traverse is : " <<endl;
-    ln->traverse(ln->head);
+    ln->traverse();
+    ListNode ez;
+    ez.traverse();
+    ez.insert(1,20);
+    ez.insert(1,30);
+    ez.insert(1,40);
+    ez.insert(1,50);
+    ez.traverse();
+
+    ez.insert(1,60);
+    ListNode kasa(ez);
+    kasa.traverse();
+
+
     return 0;
 }

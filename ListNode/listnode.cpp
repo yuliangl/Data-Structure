@@ -1,6 +1,14 @@
 #include "listnode.h"
 #include <iostream>
 
+ListNode::ListNode()
+    :head(new node),
+     tail(new node)
+{
+    head->next = nullptr;
+    tail = head;
+
+}
 
 ListNode::ListNode(int len)
     :head(new node),
@@ -21,10 +29,36 @@ ListNode::ListNode(int len)
         pnew->next = nullptr;
         tail = pnew;
     }
-//    std::cout<<"head0 is :"<< head <<std::endl;
 }
 
-void ListNode::traverse(node *head){
+ListNode::ListNode(ListNode &ln){
+    tail = head;
+    for(int i=0; i<ln.length(); i++){
+        node *pnew = new node;
+        tail->next = pnew;
+        pnew->value = ln.findNode(i)->next->value;
+        pnew->next = nullptr;
+        tail = pnew;
+    }
+}
+
+inline ListNode&
+ListNode::operator = (ListNode &ln){
+    if(ln.length() != length()){
+        std::cout<<" This operation is illegal because the ListNode lengths are different "
+                <<std::endl;
+        exit(1);
+    }
+
+    for(int i=0; i<length(); i++){
+        findNode(i)->next->value = ln.findNode(i)->next->value;
+    }
+    return *this;
+}
+
+void ListNode::traverse(){
+    if(isEmpty())
+        std::cout<<"listnode is empty "<<std::endl;
     ptmp = head;
     while(ptmp->next != nullptr){
         std::cout << ptmp->next->value << std::endl;
@@ -32,9 +66,9 @@ void ListNode::traverse(node *head){
     }
 }
 
-void ListNode::sort(node *head){
+void ListNode::sort(){
     int i, j, tmp;
-    int len = length(head);
+    int len = length();
     pLast=head->next;
     for(i=0,pLast=head->next; i<(len-1); i++,pLast=pLast->next)
     {
@@ -50,7 +84,9 @@ void ListNode::sort(node *head){
     }
 }
 
-int ListNode::length(node *head){
+int ListNode::length(){
+    if(isEmpty())
+        return 0;
     int i = 0;
     ptmp = head;
     while(ptmp->next != nullptr){
@@ -60,81 +96,72 @@ int ListNode::length(node *head){
     return i;
 }
 
-bool ListNode::isEmpty(node *head){
+bool ListNode::isEmpty(){
     if(head->next == nullptr)
         return true;
     return false;
 }
 
-int ListNode::index(node *head, node *current){
-    if(isEmpty(head)){
+int ListNode::index(node *current){
+    if(isEmpty()){
         std::cout<<"listnode is empty"<<std::endl;
         return 0;
     }
-    int leng = length(head);
+    int leng = length();
     int index = 0;
-    ptmp = head;// ptmp = head = 0  _??????????????????????????????????????????
-//    std::cout<<"head1 is :"<< head <<std::endl;
-//    std::cout<<"head1 is :"<< head->next <<std::endl;
-//    std::cout<<"head1 is :"<< head->next->next <<std::endl;
-//    std::cout<<"head1 is :"<< head->next->next->next <<std::endl;
-//    std::cout<<"head1 is :"<< head->next->next->next->next <<std::endl;
-
-//    std::cout<<"ptmp0 is :"<< ptmp <<std::endl;
-//    std::cout<<"ptmp0 is :"<< ptmp->next <<std::endl;
-//    std::cout<<"ptmp0 is :"<< ptmp->next->next <<std::endl;
-//    std::cout<<"ptmp0 is :"<< ptmp->next->next->next <<std::endl;
-//    std::cout<<"ptmp0 is :"<< ptmp->next->next->next->next <<std::endl;
+    ptmp = head;
 
     for(int i=0; i<leng; i++){
         ptmp = ptmp->next;
-//        std::cout<<"ptmp1 is :"<< ptmp <<std::endl;
-//        std::cout<<"index1 is :"<< index <<std::endl;
         if (ptmp == current){
             index = i+1;
-//            std::cout<<"index2 is :"<< index <<std::endl;
             break;
         }
     }
-//    std::cout<<"index3 is :"<< index <<std::endl;
     return index;
 }
-node* ListNode::findNode(node *head,int index){
-    if(index>length(head)){
+node* ListNode::findNode(int index){
+    if(index>length()){
         std::cout<<"index is over length"<<std::endl;
         return 0;
     }
     ptmp = head;
     for(int i=0;i<index; i++)
         ptmp = ptmp->next;
-//    std::cout<< index << " is " << ptmp->value<<std::endl;
     return ptmp;
 }
-node* ListNode::findLast(node *head, node *current){
-    if(isEmpty(head) != true && length(head)!=1)
+node* ListNode::findLast(node *current){
+    if(isEmpty() != true)
     {
-
-        int lastIndex = index(head, current) - 1;////////////////////////////////error is here
+        int lastIndex = index(current) - 1;
         ptmp = head;
         for(int i=0; i<lastIndex; i++){
             ptmp = ptmp->next;
         }
     }
     else{
-        std::cout<<"listnode is empty or length is 1 "<<std::endl;
-        return 0;
+        std::cout<<"listnode is empty "<<std::endl;
+
     }
     return ptmp;
 }
 
-bool ListNode::insert(node *head, int index, int value){
-    if(index > length(head))
+/*
+* Insert and append should be separated
+* Here to be modified
+*/
+bool ListNode::insert(int index, int value){
+    if(isEmpty() && index==1){
+        node *pNew = new node;
+        head->next = pNew;
+        pNew->value = value;
+        pNew->next = nullptr;
+        return true;
+    }
+    if(index > length())
         return false;
-    pNext = findNode(head, index);
-//    std::cout<<"pNext value is " << pNext <<std::endl;
-    pLast = findLast(head, pNext);
-
-//    std::cout<<"pLast value is " << pLast->value<<std::endl;
+    pNext = findNode(index);
+    pLast = findLast(pNext);
 
     node *pnew = new node;
     pnew->next = pNext;
@@ -143,20 +170,37 @@ bool ListNode::insert(node *head, int index, int value){
     return true;
 }
 
-bool ListNode::deleteNode(node *head, int index){
-    if(index > length(head))
+bool ListNode::deleteNode(int index){
+    if(index > length())
         return false;
-    pNext = findNode(head, index);
-    pLast = findLast(head, pNext);
+    pNext = findNode(index);
+    pLast = findLast(pNext);
 
-    pLast->next =pNext->next;
+    node* p = pNext;
+    pLast->next = pNext->next;
+    delete p;
+    p = nullptr;
     return true;
 }
 
+/*
+* The destructor cannot execute
+* Delete repeats only once
+*/
 ListNode::~ListNode(){
+    ptmp = head;
+    while (ptmp->next != nullptr) {
+        node *rem = new node;
+        rem = ptmp;
+        ptmp = ptmp->next;
+        delete rem; // only once???
+        rem = nullptr;
+    }
+    std::cout<<" disconstructer2 "<<std::endl;
     delete ptmp;
     delete head;
     delete tail;
     delete pLast;
     delete pNext;
+
 }

@@ -11,23 +11,26 @@ struct node{
 class ListNode
 {
 public:
+    ListNode();
     explicit ListNode(int len);
-    void traverse(node *);
-    void sort(node *);
-    int length(node *);
-    int index(node*, node *);
-    node* findNode(node*,int);
-    node* findLast(node*, node *);
-    bool insert(node *, int, int);
-    bool deleteNode(node *, int);
-    bool isEmpty(node *);
-
-    node *head;
-
+    ListNode(ListNode &);
+    ListNode& operator =(ListNode &);
     ~ListNode();
+
+    void traverse();
+    void sort();
+    int length();
+    int index(node *);
+    node* findNode(int);
+    node* findLast(node *);
+    bool insert(int, int);
+    bool deleteNode(int);
+    bool isEmpty();
+
 
 
 private:
+    node *head;
     node *tail;
     node *ptmp;
     node *pLast;
