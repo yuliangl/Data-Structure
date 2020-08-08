@@ -16,7 +16,7 @@ public:
     bool traverse();
     bool push(int);
     bool pop();
-    int popValue(){return value;}
+    int popValue() const { return value; }
 
 private:
     node *top;

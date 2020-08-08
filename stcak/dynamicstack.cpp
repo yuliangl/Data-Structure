@@ -11,15 +11,13 @@ dynamicStack::dynamicStack():
 }
 
 
- bool
-dynamicStack::isEmpty(){
+bool dynamicStack::isEmpty(){
     if(top == bottom)
         return true;
     return false;
 }
 
- bool
-dynamicStack::traverse(){
+bool dynamicStack::traverse(){
     if(isEmpty()){
         std::cout<< "stack is empty. can not traverse." <<std::endl;
         return false;
@@ -33,8 +31,7 @@ dynamicStack::traverse(){
     return true;
 }
 
- bool
-dynamicStack::push(int value){
+bool dynamicStack::push(int value){
     node *pnew = new node;
     pnew->next = top;
     pnew->value = value;
@@ -44,8 +41,7 @@ dynamicStack::push(int value){
 }
 
 
- bool
-dynamicStack::pop(){
+bool dynamicStack::pop(){
     if(isEmpty())
         return false;
     node *pnew = new node;
