@@ -10,11 +10,31 @@ public:
     static void sort(vector<int>& arr){
          for(uint32_t i=1; i<arr.size(); i++){
              int tmp = arr[i];
-             for(int j=i; j>0 && tmp < arr[j-1]; j--){
-                     arr[j] = arr[j-1];
-                     arr[j-1] = tmp;
+             int j=0;
+             for(j=i; j>0 && tmp < arr[j-1]; j--){
+                     arr[j] = arr[j-1];//
+//                     arr[j-1] = tmp;
              }
+             arr[j] = tmp;
          }
+    }
+};
+
+//O(n^1.3)
+class ShellSort{
+public:
+    static void sort(vector<int>& arr){
+        for(int gap=arr.size()/2; gap>0; gap/=2 ){
+            for(int i=gap; i<(int)arr.size(); i++ ){
+                int tmp=arr[i];
+                for(int j=i; j>=gap; j-=gap){
+                    if(arr[j] < arr[j-gap]){
+                        arr[j] = arr[j-gap];
+                        arr[j-gap] = tmp;
+                    }
+                }
+            }
+        }
     }
 };
 
@@ -150,18 +170,20 @@ public:
 int main()
 {
     vector<int> array{2,4,5,8,10,2,3,5,7,5,0};
-    for(int i=0; i<8000000; ++i){
-        array.push_back(rand());
-    }
-//    InsertSort::sort(array);
+//    for(int i=0; i<80000; ++i){
+//        array.push_back(rand());
+//    }
+    InsertSort::sort(array);
+//    ShellSort::sort(array);
 //    BubbleSort::bsort(array);
 //    SelectSort::sort(array);
-    QuickSort::sort(array, 0,array.size()-1);
+//    QuickSort::sort(array, 0,array.size()-1);
 //    QuickSort_optimization::sort(array, 0,array.size()-1);
 
-    //for(int i : array){
-    //    cout << i << " ";
-    //}
+    for(int i : array){
+        cout << i << " ";
+    }
 
+    cout << endl;
     return 0;
 }
