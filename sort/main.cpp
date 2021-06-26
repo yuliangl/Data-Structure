@@ -166,19 +166,74 @@ public:
 };
 
 
+class MergeSort{
+public:
+    static void sort(vector<int>& arr, int left, int right){
+        if(left < right){
+            int mid = (left + right) / 2;
+            sort(arr, left, mid);
+            sort(arr, mid + 1, right);
+
+            merge(arr, left, right, mid);
+        }
+    }
+
+    static void merge(vector<int>& arr, int left, int right, int mid){
+        int i = left;
+        int j = mid + 1;
+        int t = 0;
+        vector<int> tmp;
+
+        while(i <= mid && j <= right){
+            if(arr[i] <= arr[j]){
+                tmp[t] = arr[i];
+                ++i;
+                ++t;
+            }else{
+                tmp[t] = arr[j];
+                ++j;
+                ++t;
+            }
+        }
+        while(i <= mid){
+            tmp[t] = arr[i];
+            ++i;
+        }
+        while(j <= right){
+            tmp[t] = arr[j];
+            ++j;
+        }
+//        arr.swap(tmp);
+        int tmpleft = left;
+        t = 0;
+        while(tmpleft <= right){
+            arr[tmpleft] = arr[t];
+            ++tmpleft;
+            ++t;
+        }
+        for(int e : arr){
+            cout <<  e << " ";
+        }
+        cout << endl;
+    }
+};
+
 
 int main()
 {
-    vector<int> array{2,4,5,8,10,2,3,5,7,5,0};
+//    vector<int> array{2,4,5,8,10,3,5,7,5,0};
+    vector<int> array{8,4,5,7,1,3,6,2};
 //    for(int i=0; i<80000; ++i){
 //        array.push_back(rand());
 //    }
-    InsertSort::sort(array);
+//    InsertSort::sort(array);
 //    ShellSort::sort(array);
 //    BubbleSort::bsort(array);
 //    SelectSort::sort(array);
 //    QuickSort::sort(array, 0,array.size()-1);
 //    QuickSort_optimization::sort(array, 0,array.size()-1);
+
+    MergeSort::sort(array, 0, array.size()-1);
 
     for(int i : array){
         cout << i << " ";
