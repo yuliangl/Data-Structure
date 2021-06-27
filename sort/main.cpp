@@ -186,35 +186,31 @@ public:
 
         while(i <= mid && j <= right){
             if(arr[i] <= arr[j]){
-                tmp[t] = arr[i];
+                tmp.push_back(arr[i]);
                 ++i;
-                ++t;
             }else{
-                tmp[t] = arr[j];
+                tmp.push_back(arr[j]);
                 ++j;
-                ++t;
             }
         }
         while(i <= mid){
-            tmp[t] = arr[i];
+                tmp.push_back(arr[i]);
             ++i;
         }
         while(j <= right){
-            tmp[t] = arr[j];
+                tmp.push_back(arr[j]);
             ++j;
         }
-//        arr.swap(tmp);
         int tmpleft = left;
-        t = 0;
         while(tmpleft <= right){
-            arr[tmpleft] = arr[t];
-            ++tmpleft;
-            ++t;
+            arr[tmpleft] = tmp[t];
+            tmpleft++;
+            t++;
         }
-        for(int e : arr){
-            cout <<  e << " ";
-        }
-        cout << endl;
+//        for(int e : arr){
+//            cout <<  e << " ";
+//        }
+//        cout << endl;
     }
 };
 
@@ -223,9 +219,9 @@ int main()
 {
 //    vector<int> array{2,4,5,8,10,3,5,7,5,0};
     vector<int> array{8,4,5,7,1,3,6,2};
-//    for(int i=0; i<80000; ++i){
-//        array.push_back(rand());
-//    }
+    for(int i=0; i<8000000; ++i){
+        array.push_back(rand());
+    }
 //    InsertSort::sort(array);
 //    ShellSort::sort(array);
 //    BubbleSort::bsort(array);
@@ -235,9 +231,9 @@ int main()
 
     MergeSort::sort(array, 0, array.size()-1);
 
-    for(int i : array){
-        cout << i << " ";
-    }
+//    for(int i : array){
+//        cout << i << " ";
+//    }
 
     cout << endl;
     return 0;
