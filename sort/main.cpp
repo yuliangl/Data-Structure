@@ -214,12 +214,52 @@ public:
     }
 };
 
+class HeapSort{
+public:
+    static void sort(vector<int>& arr){
+        int tmp=0;
+        for(int i=arr.size()/2-1; i>=0; --i){
+            makeHeap(arr, i, arr.size());
+        }
+
+        for(int j=arr.size()-1; j>0; --j){
+            tmp = arr[0];
+            arr[0] = arr[j];
+            arr[j] = tmp;
+
+            makeHeap(arr, 0, j);
+
+//            for(int e : arr){
+//                    cout << e << " ";
+//            }
+//            cout << endl;
+        }
+
+    }
+
+    static void makeHeap(vector<int>& arr, int i, int length){
+        int tmp = arr[i];
+        int k = 0;
+        for(k = i*2+1; k<length; k=k*2+1){
+            if(arr[k] < arr[k+1] && (k+1<length)){ //**importent
+                k=k+1;
+            }
+            if(arr[k] > tmp){
+                arr[i] = arr[k];
+                i = k;
+            }else{
+                break;
+            }
+            arr[i] = tmp;
+        }
+    }
+};
 
 int main()
 {
 //    vector<int> array{2,4,5,8,10,3,5,7,5,0};
     vector<int> array{8,4,5,7,1,3,6,2};
-    for(int i=0; i<8000000; ++i){
+    for(int i=0; i<80000; ++i){
         array.push_back(rand());
     }
 //    InsertSort::sort(array);
@@ -228,8 +268,8 @@ int main()
 //    SelectSort::sort(array);
 //    QuickSort::sort(array, 0,array.size()-1);
 //    QuickSort_optimization::sort(array, 0,array.size()-1);
-
-    MergeSort::sort(array, 0, array.size()-1);
+//    MergeSort::sort(array, 0, array.size()-1);
+    HeapSort::sort(array);
 
 //    for(int i : array){
 //        cout << i << " ";
