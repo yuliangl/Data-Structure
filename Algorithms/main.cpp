@@ -14,8 +14,17 @@ void testDC(){
     hanoi(5, 'a', 'b','c');
 }
 
+void testString(){
+    char str1[]= "1234";
+    char str2[]= "5678";
+
+    char* str3=strcat(str1, str2);
+
+    cout << str3 << endl;
+}
+
 int main()
 {
-    testDC();
+    testString();
     return 0;
 }

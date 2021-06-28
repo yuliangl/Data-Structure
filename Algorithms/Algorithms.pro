@@ -5,6 +5,7 @@ CONFIG -= qt
 
 SOURCES += \
         binarySerch.cpp \
+        cstring.cpp \
         dividConquer.cpp \
         main.cpp
 
