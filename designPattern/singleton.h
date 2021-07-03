@@ -5,14 +5,16 @@
 class Singleton
 {
 public:
+    Singleton(const Singleton&) = delete ;
+    Singleton(const Singleton&&) = delete ;
     static Singleton* GetInstance(){
         return singleton;
     }
+    static Singleton* singleton;
 private:
     Singleton();
-    static Singleton* singleton;
+
 };
 
-Singleton* Singleton::singleton = new Singleton;
 
 #endif // SINGLETON_H

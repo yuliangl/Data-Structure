@@ -1,6 +1,8 @@
 #include "singleton.h"
 
-Singleton::Singleton()
-{
+
+Singleton* Singleton::singleton = new Singleton;
+
+Singleton::Singleton(){
 
 }
